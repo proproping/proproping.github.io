@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on worklog</title>
+    <link>https://proproping.github.io/tags/</link>
+    <description>Recent content in Tags on worklog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <copyright>&amp;copy; Ryotaro Tsuji. All rights reserved.&lt;br&gt;
+Made with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://themes.gohugo.io/hugo_theme_pickles/&#34;&gt;Pickles&lt;/a&gt; theme.</copyright>
+    <lastBuildDate>Fri, 01 May 2020 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://proproping.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java</title>
+      <link>https://proproping.github.io/tags/java/</link>
+      <pubDate>Fri, 01 May 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://proproping.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL</title>
+      <link>https://proproping.github.io/tags/postgresql/</link>
+      <pubDate>Fri, 01 May 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://proproping.github.io/tags/postgresql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>環境構築</title>
+      <link>https://proproping.github.io/tags/%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/</link>
+      <pubDate>Fri, 01 May 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://proproping.github.io/tags/%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AtCoder</title>
+      <link>https://proproping.github.io/tags/atcoder/</link>
+      <pubDate>Mon, 09 Mar 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://proproping.github.io/tags/atcoder/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

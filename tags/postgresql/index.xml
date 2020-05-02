@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PostgreSQL on worklog</title>
+    <link>https://proproping.github.io/tags/postgresql/</link>
+    <description>Recent content in PostgreSQL on worklog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-JP</language>
+    <copyright>&amp;copy; Ryotaro Tsuji. All rights reserved.&lt;br&gt;
+Made with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://themes.gohugo.io/hugo_theme_pickles/&#34;&gt;Pickles&lt;/a&gt; theme.</copyright>
+    <lastBuildDate>Fri, 01 May 2020 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://proproping.github.io/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MacOSでのPostgreSQLを用いたJBDCの始め方</title>
+      <link>https://proproping.github.io/posts/howtousepostgresql/</link>
+      <pubDate>Fri, 01 May 2020 09:00:00 +0900</pubDate>
+      
+      <guid>https://proproping.github.io/posts/howtousepostgresql/</guid>
+      <description>はじめに JDBCを触る機会があったのですが、個人用の環境でも練習したいと思い、PostgreSQLを導入した際の手順です。基本的には備忘録で</description>
+    </item>
+    
+  </channel>
+</rss>
