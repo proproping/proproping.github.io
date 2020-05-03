@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://proproping.github.io/css/style.css" />
   
   
-  <link rel='icon' type='image/x-icon' href="https://avatars3.githubusercontent.com/u/47375894?s=460&amp;u=f3d45135bce3de2efa8a0aea89b017e0a1d76458&amp;v=4" />
+  <link rel='icon' type='image/x-icon' href="https://proproping.github.io/images/icon.png" />
   
   <script type="text/javascript" src="https://proproping.github.io/js/bundle.js"></script>
   
@@ -86,26 +86,31 @@
 <li><a href="http://vdeep.net/mac-postgresql">MacにPostgreSQLを導入する方法&amp;初期設定をおこなう</a></li>
 </ul>
 <p>上記の記事を参考にPostgreSQLをインストールします。
-以下では、userとpasswordは<code>postgresql</code>として説明します。</p>
+以下では、userとpasswordは</p>
+<pre><code>postgresql
+</code></pre><p>として説明します。</p>
 <h2 id="postgresql-jdbc-driverをダウンロード">PostgreSQL JDBC Driverをダウンロード</h2>
 <ul>
 <li><a href="https://jdbc.postgresql.org/download.html">PostgreSQL公式</a></li>
 </ul>
 <p>上記ページからJDBC Driverをダウンロードします。</p>
 <h2 id="jdbc-driverjarファイルの設置とclasspathの設定">JDBC Driver(jarファイル)の設置とCLASSPATHの設定</h2>
-<p>MacOSかつ、JDKのバージョンが8以下であれば、Java外部ライブラリ(jarファイル等)を<code>/Library/Java/Extensions</code>に設置するとクラスローダーがコンパイル時にJDBCのクラスファイルを探してくれます。
+<p>MacOSかつ、JDKのバージョンが8以下であれば、Java外部ライブラリ(jarファイル等)を</p>
+<pre><code>/Library/Java/Extensions
+</code></pre><p>に設置するとクラスローダーがコンパイル時にJDBCのクラスファイルを探してくれます。
 しかし、今回はJDK13を用いているためCLASSPATHを設定する必要があります。</p>
 <h3 id="1-jdbc-driverの設置">1. JDBC Driverの設置</h3>
-<p>ダウンロードした<code>postgresql-42.2.12.jar</code>を<code>/Library/Java/Extensions</code>に設置します。</p>
+<p>ダウンロードした</p>
+<pre><code>postgresql-42.2.12.jar
+</code></pre><p>を</p>
+<pre><code>/Library/Java/Extensions
+</code></pre><p>に設置します。</p>
 <h3 id="2-classpathの設定">2. CLASSPATHの設定</h3>
 <p>コンパイル時にクラスローダーに反応させるために、環境変数CLASSPATHを設定します。
 ターミナルを起動し、以下コマンドを実行します。</p>
 <pre><code class="language-bash:CLASSPATHの設定及び再読み込み" data-lang="bash:CLASSPATHの設定及び再読み込み">echo 'export CLASSPATH=.:/Library/Java/Extensions/postgresql-42.2.12.jar:$CLASSPATH' &gt;&gt; .bash_profile
 source ~/.bash_profile
-</code></pre><p>1行目は<code>.bash_profile</code>へのCLASSPATHの書き込み
-2行目は<code>.bash_profile</code>の再読み込み
-をそれぞれ行っています。</p>
-<h2 id="jdbcを用いたpostgresqlへの接続テスト">JDBCを用いたPostgreSQLへの接続テスト</h2>
+</code></pre><h2 id="jdbcを用いたpostgresqlへの接続テスト">JDBCを用いたPostgreSQLへの接続テスト</h2>
 <p>最後に、テストテーブルの作成とデータベースへの接続及びデータの取得のデモを行います。</p>
 <h3 id="1-テスト用テーブルの作成">1. テスト用テーブルの作成</h3>
 <h4 id="テストテーブル作成用sqlの作成">テストテーブル作成用SQLの作成</h4>
@@ -208,7 +213,7 @@ foobar gets 35.6
 <aside class="p-author">
   
   <div class="c-avatar p-author__avatar">
-    <img alt="Author Avatar" src="https://avatars3.githubusercontent.com/u/47375894?s=460&amp;u=f3d45135bce3de2efa8a0aea89b017e0a1d76458&amp;v=4" />
+    <img alt="Author Avatar" src="https://proproping.github.io/images/icon.png" />
   </div>
   
   

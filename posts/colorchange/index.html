@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://proproping.github.io/css/style.css" />
   
   
-  <link rel='icon' type='image/x-icon' href="https://avatars3.githubusercontent.com/u/47375894?s=460&amp;u=f3d45135bce3de2efa8a0aea89b017e0a1d76458&amp;v=4" />
+  <link rel='icon' type='image/x-icon' href="https://proproping.github.io/images/icon.png" />
   
   <script type="text/javascript" src="https://proproping.github.io/js/bundle.js"></script>
   
@@ -70,12 +70,11 @@
   
   <section id="js-article" class="p-article__body">
     <h2 id="はじめに">はじめに</h2>
-<p>2019年10月頃から本格的に手をつけ始めたAtCoderでのレートがついに800を超えました。
-キリが良いのでQiitaデビューをしようと思い、筆を取りました。
-<img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/517628/7f408d41-bd2b-4149-57a7-500ad36ddc8c.png" alt="atcoder.png">
-本記事では、備忘録と友人への布教用を兼ねて、
+<p>2019年10月頃から本格的に手をつけ始めたAtCoderでのレートがついに800を超えました。</p>
+<p><img src="https://proproping.github.io/images/colorChange/rating.png" alt="atcoder.png"></p>
+<p>本記事では、備忘録と友人への布教用を兼ねて、
 環境構築からコンテストへの参加まで自身がやってきたことを紹介したいと思います。
-なお、macOS Catalina version10.15.3を前提として進めていきます。</p>
+なお、MacOS Catalina version10.15.3を前提として進めていきます。</p>
 <h2 id="環境構築">環境構築</h2>
 <p>当初は、Jupyter Notebookを使用していたのですが、
 入力例を貼り付ける際に改行が含まれないことがネックになり、VSCodeに移行しました。
@@ -95,9 +94,12 @@ venv環境をそのままVSCode上で使えるようにしました。</p>
 <li>settings.jsonに<!-- raw HTML omitted --><code>&quot;python.venvPath&quot;: &quot;1.で設定したvenv環境のPath&quot;</code><!-- raw HTML omitted -->を追記</li>
 <li>MarketPlaceより各種拡張機能を追加
 <ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python</a><!-- raw HTML omitted -->VSCodeでPythonファイルを実行するために必要です。</li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner">Code Runner</a><!-- raw HTML omitted -->MacOSであれば、Ctrl+Option+Nでファイルを実行できます。</li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=kiteco.kite">Kite Python Autocomplete</a><!-- raw HTML omitted -->コーディングの際に自動補完をしてくれるので、時短になります。</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python</a><br>
+VSCodeでPythonファイルを実行するために必要です。</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner">Code Runner</a><br>
+MacOSであれば、Ctrl+Option+Nでファイルを実行できます。</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=kiteco.kite">Kite Python Autocomplete</a><br>
+コーディングの際に自動補完をしてくれるので、時短になります。</li>
 </ul>
 </li>
 </ul>
@@ -110,18 +112,28 @@ venv環境をそのままVSCode上で使えるようにしました。</p>
 <ul>
 <li>活用したサイト
 <ul>
-<li><a href="https://kenkoooo.com/atcoder/#/table/">AtCoder Problems</a><!-- raw HTML omitted -->AtCoderの過去問を難易度ごとに色付けして参照することができます。<!-- raw HTML omitted -->ライバルを設定できたりするので、モチベーション維持にも繋がります。</li>
-<li><a href="https://onlinejudge.u-aizu.ac.jp/home">Aizu Online Judge</a><!-- raw HTML omitted -->Pythonに限らず様々な言語で実際にコーディングしながら、競技プログラミングで使用する基礎的な概念を学べます。</li>
-<li><a href="https://note.nkmk.me">note.nkmk.me</a><!-- raw HTML omitted -->Pythonの言語仕様やライブラリについて目的に応じた記事を掲載してくださっています。</li>
+<li>
+<p><a href="https://kenkoooo.com/atcoder/#/table/">AtCoder Problems</a><br>
+AtCoderの過去問を難易度ごとに色付けして参照することができます。<br>
+ライバルを設定できたりするので、モチベーション維持にも繋がります。</p>
+</li>
+<li>
+<p><a href="https://onlinejudge.u-aizu.ac.jp/home">Aizu Online Judge</a><br>
+Pythonに限らず様々な言語で実際にコーディングしながら、競技プログラミングで使用する基礎的な概念を学べます。</p>
+</li>
+<li>
+<p><a href="https://note.nkmk.me">note.nkmk.me</a><br>
+Pythonの言語仕様やライブラリについて目的に応じた記事を掲載してくださっています。</p>
+</li>
 </ul>
 </li>
 </ul>
 <h2 id="おわりに">おわりに</h2>
 <p>個人的な感想にはなりますが、蟻本等で体系的な学びを進めつつ、
 過去問や他コンテストへの参加で瞬発力を鍛えるのがレートを伸ばすだけなら最短なのかなぁと思います。
-今後は、体系的な学びを重点的に進めていきたい所存です&hellip;。</p>
+今後は、体系的な学びを重点的に進めていきたい所存です。</p>
 <h2 id="参考文献">参考文献</h2>
-<p>本記事は以下の情報を参考にして執筆しました。</p>
+<p>本記事は以下の情報を参考にしました。</p>
 <ul>
 <li><a href="https://qiita.com/naohiro2g/items/3368baa8fc93eff00e49">MacでPython環境を用意し、Jupyter Notebookを設定するメモ（2018年4月）</a></li>
 <li><a href="https://qiita.com/watamura/items/51c70fbb848e5f956fd6">MacOSでVisual Studio Codeをインストールする手順</a></li>
@@ -150,7 +162,7 @@ venv環境をそのままVSCode上で使えるようにしました。</p>
 <aside class="p-author">
   
   <div class="c-avatar p-author__avatar">
-    <img alt="Author Avatar" src="https://avatars3.githubusercontent.com/u/47375894?s=460&amp;u=f3d45135bce3de2efa8a0aea89b017e0a1d76458&amp;v=4" />
+    <img alt="Author Avatar" src="https://proproping.github.io/images/icon.png" />
   </div>
   
   
