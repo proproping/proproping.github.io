@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>MacOSでのPostgreSQLを用いたJBDCの始め方</title>
-  <meta property="og:title" content="MacOSでのPostgreSQLを用いたJBDCの始め方" />
-  <meta name="twitter:title" content="MacOSでのPostgreSQLを用いたJBDCの始め方" />
+  <title>ELKとfluentdでdstat/dfを可視化</title>
+  <meta property="og:title" content="ELKとfluentdでdstat/dfを可視化" />
+  <meta name="twitter:title" content="ELKとfluentdでdstat/dfを可視化" />
   
 
   
 
   <meta name="author" content="Ryotaro Tsuji"/>
   <meta property="og:site_name" content="worklog" />
-  <meta property="og:url" content="https://proproping.github.io/posts/howtousepostgresql/" />
+  <meta property="og:url" content="https://proproping.github.io/posts/ekl/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -54,141 +54,31 @@
 
 <article class="p-article">
   <header>
-    <h1>MacOSでのPostgreSQLを用いたJBDCの始め方</h1>
+    <h1>ELKとfluentdでdstat/dfを可視化</h1>
     <div>
       <div class="c-time">
         Posted on
-        <time datetime="2020-05-01T09:00:00&#43;09:00">
-          May 1, 2020
+        <time datetime="2020-09-19T09:00:00&#43;09:00">
+          Sep 19, 2020
         </time>
       </div>
       
-      <a href="https://proproping.github.io/tags/java" class="c-tag">Java</a>
+      <a href="https://proproping.github.io/tags/elasticsearch" class="c-tag">ElasticSearch</a>
       
-      <a href="https://proproping.github.io/tags/postgresql" class="c-tag">PostgreSQL</a>
+      <a href="https://proproping.github.io/tags/logstash" class="c-tag">Logstash</a>
       
-      <a href="https://proproping.github.io/tags/%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89" class="c-tag">環境構築</a>
+      <a href="https://proproping.github.io/tags/kibana" class="c-tag">Kibana</a>
+      
+      <a href="https://proproping.github.io/tags/fluentd" class="c-tag">fluentd</a>
       
     </div>
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="はじめに">はじめに</h2>
-<p>JDBCを触る機会があったのですが、個人用の環境でも練習したいと思い、PostgreSQLを導入した際の手順です。基本的には備忘録です。</p>
-<h2 id="各種バージョン等">各種バージョン等</h2>
-<pre><code>- macOS : 10.15.4
-- JDK : 13.0.1
-- PostgreSQL : 12.2
-- JDBC Driver : 42.4.12
-- ターミナル : bash
-</code></pre><h2 id="homebrewを用いてpostgresqlをインストール">Homebrewを用いてPostgreSQLをインストール</h2>
-<ul>
-<li><a href="http://vdeep.net/mac-postgresql">MacにPostgreSQLを導入する方法&amp;初期設定をおこなう</a></li>
-</ul>
-<p>上記の記事を参考にPostgreSQLをインストールします。
-以下では、userとpasswordは</p>
-<pre><code>postgresql
-</code></pre><p>として説明します。</p>
-<h2 id="postgresql-jdbc-driverをダウンロード">PostgreSQL JDBC Driverをダウンロード</h2>
-<ul>
-<li><a href="https://jdbc.postgresql.org/download.html">PostgreSQL公式</a></li>
-</ul>
-<p>上記ページからJDBC Driverをダウンロードします。</p>
-<h2 id="jdbc-driverjarファイルの設置とclasspathの設定">JDBC Driver(jarファイル)の設置とCLASSPATHの設定</h2>
-<p>MacOSかつ、JDKのバージョンが8以下であれば、Java外部ライブラリ(jarファイル等)を</p>
-<pre><code>/Library/Java/Extensions
-</code></pre><p>に設置するとクラスローダーがコンパイル時にJDBCのクラスファイルを探してくれます。
-しかし、今回はJDK13を用いているためCLASSPATHを設定する必要があります。</p>
-<h3 id="1-jdbc-driverの設置">1. JDBC Driverの設置</h3>
-<p>ダウンロードした</p>
-<pre><code>postgresql-42.2.12.jar
-</code></pre><p>を</p>
-<pre><code>/Library/Java/Extensions
-</code></pre><p>に設置します。</p>
-<h3 id="2-classpathの設定">2. CLASSPATHの設定</h3>
-<p>コンパイル時にクラスローダーに反応させるために、環境変数CLASSPATHを設定します。
-ターミナルを起動し、以下コマンドを実行します。</p>
-<pre><code class="language-bash:CLASSPATHの設定及び再読み込み" data-lang="bash:CLASSPATHの設定及び再読み込み">echo 'export CLASSPATH=.:/Library/Java/Extensions/postgresql-42.2.12.jar:$CLASSPATH' &gt;&gt; .bash_profile
-source ~/.bash_profile
-</code></pre><h2 id="jdbcを用いたpostgresqlへの接続テスト">JDBCを用いたPostgreSQLへの接続テスト</h2>
-<p>最後に、テストテーブルの作成とデータベースへの接続及びデータの取得のデモを行います。</p>
-<h3 id="1-テスト用テーブルの作成">1. テスト用テーブルの作成</h3>
-<h4 id="テストテーブル作成用sqlの作成">テストテーブル作成用SQLの作成</h4>
-<p>任意の場所に以下のファイルを作成します。
-以下では~/Desktopに作成したものとします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql:createTestTable.sql" data-lang="sql:createTestTable.sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">table</span> <span style="color:#a6e22e">test</span>(
-    id serial <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
-    name <span style="color:#66d9ef">varchar</span>(<span style="color:#ae81ff">255</span>),
-    point <span style="color:#66d9ef">real</span>
-);
-<span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> <span style="color:#a6e22e">test</span>(name,point) <span style="color:#66d9ef">values</span>
-(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#ae81ff">41</span>.<span style="color:#ae81ff">2</span>),
-(<span style="color:#e6db74">&#39;bar&#39;</span>,<span style="color:#ae81ff">55</span>.<span style="color:#ae81ff">1</span>),
-(<span style="color:#e6db74">&#39;baz&#39;</span>, <span style="color:#ae81ff">10</span>.<span style="color:#ae81ff">7</span>),
-(<span style="color:#e6db74">&#39;qux&#39;</span>, <span style="color:#ae81ff">98</span>.<span style="color:#ae81ff">0</span>),
-(<span style="color:#e6db74">&#39;quux&#39;</span>, <span style="color:#ae81ff">22</span>.<span style="color:#ae81ff">2</span>),
-(<span style="color:#e6db74">&#39;foobar&#39;</span>, <span style="color:#ae81ff">35</span>.<span style="color:#ae81ff">6</span>);
-</code></pre></div><h4 id="postgresqlの起動とデータベースの作成">PostgreSQLの起動とデータベースの作成</h4>
-<p>ターミナルを起動し、以下コマンドを実行します。</p>
-<pre><code class="language-bash:PostgreSQLの起動とデータベースの作成" data-lang="bash:PostgreSQLの起動とデータベースの作成">brew services start postgresql
-createdb test
-psql test
-</code></pre><h4 id="テスト用テーブルの作成">テスト用テーブルの作成</h4>
-<p>PostgreSQLのコンソールが起動したら、以下コマンドを実行します。</p>
-<pre><code class="language-psql:テスト用テーブルの作成" data-lang="psql:テスト用テーブルの作成">\i ~/Desktop/createTestTable.sql
-\q
-</code></pre><h3 id="2-jdbcからdbへの接続及びデータの取得">2. JDBCからDBへの接続及びデータの取得</h3>
-<h4 id="呼び出し用のjavaファイルの作成">呼び出し用のJavaファイルの作成</h4>
-<p>任意の場所に以下のファイルを作成します。
-以下では~/Desktopに作成したものとします。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java:Main.java" data-lang="java:Main.java"><span style="color:#f92672">import</span> java.sql.Connection<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.sql.DriverManager<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.sql.PreparedStatement<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.sql.ResultSet<span style="color:#f92672">;</span>
-<span style="color:#f92672">import</span> java.sql.SQLException<span style="color:#f92672">;</span>
-
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
-    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
-        String url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;jdbc:postgresql://localhost/test&#34;</span><span style="color:#f92672">;</span>
-        String user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;postgresql&#34;</span><span style="color:#f92672">;</span>
-        String password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;postgresql&#34;</span><span style="color:#f92672">;</span>
-        String sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select * from test&#34;</span><span style="color:#f92672">;</span>
-
-        <span style="color:#66d9ef">try</span><span style="color:#f92672">(</span>Connection con <span style="color:#f92672">=</span> DriverManager<span style="color:#f92672">.</span><span style="color:#a6e22e">getConnection</span><span style="color:#f92672">(</span>url<span style="color:#f92672">,</span> user<span style="color:#f92672">,</span> password<span style="color:#f92672">)){</span>
-            <span style="color:#66d9ef">try</span><span style="color:#f92672">(</span>PreparedStatement ps <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span><span style="color:#a6e22e">prepareStatement</span><span style="color:#f92672">(</span>sql<span style="color:#f92672">)){</span>
-                ResultSet rs <span style="color:#f92672">=</span> ps<span style="color:#f92672">.</span><span style="color:#a6e22e">executeQuery</span><span style="color:#f92672">();</span>
-                <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">()){</span>
-                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getString</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">));</span>
-                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; gets &#34;</span><span style="color:#f92672">);</span>
-                    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>rs<span style="color:#f92672">.</span><span style="color:#a6e22e">getInt</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;point&#34;</span><span style="color:#f92672">));</span>
-                <span style="color:#f92672">}</span>
-            <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">){</span>
-                e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-            <span style="color:#f92672">}</span>
-        <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>SQLException e<span style="color:#f92672">){</span>
-            e<span style="color:#f92672">.</span><span style="color:#a6e22e">printStackTrace</span><span style="color:#f92672">();</span>
-        <span style="color:#f92672">}</span>
-    <span style="color:#f92672">}</span>
-<span style="color:#f92672">}</span>
-</code></pre></div><h4 id="javaファイルのコンパイルと実行">Javaファイルのコンパイルと実行</h4>
-<pre><code class="language-bash:Javaファイルのコンパイルと実行" data-lang="bash:Javaファイルのコンパイルと実行">cd ~/Desktop
-javac Main.java
-java Main
-</code></pre><h4 id="出力結果">出力結果</h4>
-<pre><code>foo gets 41.2
-bar gets 55.1
-baz gets 10.7
-qux gets 98.0
-quux gets 22.2
-foobar gets 35.6
-</code></pre><h2 id="おわりに">おわりに</h2>
-<p>初めてJDBCを用いてデータベースアクセスを行う方の手助けになればと思います。
-誤り等あればご指摘頂けると幸いです。</p>
+    <h1 id="はじめに">はじめに</h1>
+<p>リソース情報の可視化について〜</p>
+<h2 id="おわりに">おわりに</h2>
 <h2 id="参考文献">参考文献</h2>
-<ul>
-<li><a href="http://vdeep.net/mac-postgresql">MacにPostgreSQLを導入する方法&amp;初期設定をおこなう</a></li>
-<li><a href="https://dotinstall.com/lessons/basic_postgresql">ドットインストール - PostgreSQL入門</a></li>
-</ul>
 
   </section>
   <footer>
@@ -197,12 +87,11 @@ foobar gets 35.6
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://proproping.github.io/posts/ekl/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://proproping.github.io/posts/colorchange/">Older</a>
+          <a href="https://proproping.github.io/posts/howtousepostgresql/">Older</a>
           
         </div>
       </div>
